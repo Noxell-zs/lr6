@@ -33,7 +33,8 @@ dependencies {
 }
 
 gretty {
-	httpPort = 8080
+	// httpPort = 8080
+  httpPort = project.hasProperty("httpPort") ? project.httpPort as int : 8081
 	contextPath = '/'
 }
 

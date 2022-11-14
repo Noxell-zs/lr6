@@ -3,16 +3,18 @@
 Для 5 варианта задана сущность - кофемашина.  
 
 Для сборки и запуска серверного web-приложения с помощью Gradle ввести
-`gradlew.bat jettyRunWar` в cmd или `./gradlew jettyRunWar` в bash. При
-первом запуске возможна установка плагинов Gradle. После появления INFO
-сообщений *runs at: http://localhost:8080/*, можно в браузере перейти
-по указанному адресу или отправить запрос через клиентское приложение.
-Для остановки нажать Enter.
+`gradlew.bat jettyRunWar -PhttpPort=PORT` в cmd или
+`./gradlew jettyRunWar -PhttpPort=PORT` в bash. При первом запуске возможна
+установка плагинов Gradle. Вместо PORT неодходимо вписать свободный http-порт.
+После появления INFO сообщений *runs at: http://localhost:PORT/*,
+можно в браузере перейти по указанному адресу или отправить запрос через
+клиентское приложение. Для остановки нажать Enter.
 
 Для сборки и запуска клиентского приложения с помощью Gradle ввести
-`gradlew.bat run -q --console=plain` в cmd или
-`./gradlew run -q --console=plain` в bash. В консольном интерфейсе
-доступно 5 действий: CREATE, READ, UPDATE, DELETE, READ ALL.
+`gradlew.bat run -q --console=plain --args="PORT"` в cmd или
+`./gradlew run -q --console=plain --args="PORT"` в bash. Вместо PORT
+неодходимо вписать http-порт, выбранный для сервера. В консольном
+интерфейсе доступно 5 действий: CREATE, READ, UPDATE, DELETE, READ ALL.
 
 На главной странице можно перейти к форме добавления или к поиску
 по минимальному году. После добавления объектов, будет доступны

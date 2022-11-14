@@ -9,12 +9,17 @@ import ru.sfu.entity.CoffeeMachine;
 /** RESTful client application */
 public final class Client {
   private final static int EXIT=0, CREATE=1, READ=2, UPDATE=3, DELETE=4, READ_ALL=5;
+  private static String port = "8081";
 
   /**
    * Entry point
    * @param args Command Line Arguments
    */
   public static void main(String[] args) {
+    if (args.length > 0 && args[0].matches("[0-9]+")) {
+      port = args[0];
+    }
+
     System.out.printf(
         "\n%d. Create\n%d. Read\n%d. Update\n%d. Delete\n%d. Read all\n%d. Exit\n",
         CREATE, READ, UPDATE, DELETE, READ_ALL, EXIT
@@ -65,7 +70,7 @@ public final class Client {
   public static void readAll() {
     try {
       ArrayList<Object> list = new RestTemplate().getForObject(
-          "http://localhost:8080/coffee-machine",
+          "http://localhost:"+port+"/coffee-machine",
           ArrayList.class);
 
       if (list == null) {
@@ -87,7 +92,7 @@ public final class Client {
 
     try {
       result = new RestTemplate().getForObject(
-          "http://localhost:8080/coffee-machine/{id}",
+          "http://localhost:"+port+"/coffee-machine/{id}",
           String.class, id);
     } catch (Exception e) {
       System.err.println(e.getMessage());
@@ -106,7 +111,7 @@ public final class Client {
 
     try {
       System.out.println(new RestTemplate().postForObject(
-          "http://localhost:8080/coffee-machine",
+          "http://localhost:"+port+"/coffee-machine",
           request, String.class));
     } catch (Exception e) {
       System.err.println(e.getMessage());
@@ -117,7 +122,7 @@ public final class Client {
   public static void delete(int id) {
     try {
       System.out.println(new RestTemplate().exchange(
-          "http://localhost:8080/coffee-machine/{id}",
+          "http://localhost:"+port+"/coffee-machine/{id}",
           HttpMethod.DELETE, null, String.class, id
       ).getBody());
     } catch (Exception e) {
@@ -131,7 +136,7 @@ public final class Client {
 
     try {
       System.out.println(new RestTemplate().exchange(
-          "http://localhost:8080/coffee-machine/{id}",
+          "http://localhost:"+port+"/coffee-machine/{id}",
           HttpMethod.PUT, request, String.class, coffeeMachine.getId()
       ).getBody());
     } catch (Exception e) {
